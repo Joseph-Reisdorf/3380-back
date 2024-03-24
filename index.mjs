@@ -1,5 +1,7 @@
 // file type: mjs because that allows it to read the ES6 import syntax (for import and export, and probably other things too)
 // https://nodejs.org/docs/latest/api/esm.html - for more research on ES6 modules in Node.js
+import dotenv from 'dotenv';
+dotenv.config({ path: './.env.local' });
 
 import express from "express"; 
 import cors from "cors";
@@ -22,11 +24,12 @@ const app = express(); // defines express app for handling requests
 // Origins allowed to make requests to the server, add production later
 //const allowedOrigins = ['http://localhost:3000'
                       /*'Production_URL.com',*///];
-
-
+                      
+const FRONT_URL = process.env.REACT_APP_FRONT_URL;
+console.log(FRONT_URL);
 // Customized CORS - Similar to the manual approach
 const corsOptions = {
-    origin: 'http://localhost:3000', // This should be the URL of the front-end app
+    origin: `${FRONT_URL}`, // This should be the URL of the front-end app
     credentials: true, // This is important for cookies, authorization headers with HTTPS 
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'x-access-token', 'Authorization'],
 };
