@@ -44,7 +44,7 @@ app.use(cookieParser()); // Use cookie-parser middleware
 // Session middleware, handles session data / cookies
 app.use(session({
     key: "user_id",
-    secret: "c@01M24MWUhBCNd&!sNS84Chc",
+    secret: process.env.JWT_SECRET,
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -55,7 +55,6 @@ app.use(session({
 }));
 
 // Routes
-
 app.use("/artists", artistRoute);
 app.use("/albums", albumRoute);
 app.use("/debug_person", debugPersonRoute);
@@ -63,39 +62,6 @@ app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/user_auth", userAuthRoute);
 
-/* 
-Moving the below 
-app.get('/library', (req, LIBRARY page",
-        "msg" : "This is my first page",
-        "username": "PeterShaba"
-    }];
-    res.json(str); // Send JSON response
-});
-app.get('/recentsname": "Coder Peter Shaba",
-        "msg" : "This is my first page",
-        "username": "PeterShaba"
-
-
-
-// Will be where we start direction routes
-app.get("/", (req, res) => {
-    res.send("Responding to GET /");
-    console.log("Responding to GET /");
-});
-
-// Test to get all people from db
-app.get("/persons", (req, res) => {
-    //res.send("Responding to GET /persons");
-    console.log("Responding to GET /persons");
-    const q = "SELECT * FROM person";
-    db.query(q, (err, result) => {
-        if (err) throw err;
-
-        res.json(result);
-    });
-    
-});
-*/
 
 const PORT = process.env.PORT || 8080;
 

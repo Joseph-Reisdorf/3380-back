@@ -1,7 +1,7 @@
 import db from "../database.mjs";
 import bcrypt from "bcrypt";
 
-const saltRounds = 10;
+const saltRounds = process.env.SALT_ROUNDS || 10;
 
 // get domain from email
 function getDomain(email) {
