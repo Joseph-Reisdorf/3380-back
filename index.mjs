@@ -98,8 +98,10 @@ app.get("/persons", (req, res) => {
 });
 */
 
+const PORT = process.env.PORT || 8080;
+
 // Start server listening on port 8080
-app.listen(8080, () => {
+app.listen(PORT, () => {
     console.log("We stan Uma!");
     console.log("Server is running on port 8080");
 });
