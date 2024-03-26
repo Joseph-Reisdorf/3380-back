@@ -29,7 +29,7 @@ const FRONT_URL = process.env.REACT_APP_FRONT_URL;
 console.log(FRONT_URL);
 // Customized CORS - Similar to the manual approach
 const corsOptions = {
-    origin: `${FRONT_URL}`, // This should be the URL of the front-end app
+    origin: FRONT_URL, // This should be the URL of the front-end app
     credentials: true, // This is important for cookies, authorization headers with HTTPS 
     allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'x-access-token', 'Authorization'],
 };
