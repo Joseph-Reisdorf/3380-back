@@ -27,16 +27,15 @@ const app = express(); // defines express app for handling requests
                       
 const FRONT_URL = process.env.REACT_APP_FRONT_URL;
 console.log(FRONT_URL);
-/*
+
 // Customized CORS - Similar to the manual approach
 const corsOptions = {
-    origin: "*", // This should be the URL of the front-end app
+    origin: FRONT_URL, // This should be the URL of the front-end app
     credentials: true, // This is important for cookies, authorization headers with HTTPS 
     allowedHeaders: ['Origin', 'Allow-Control-Allow-Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'x-access-token', 'Authorization'],
 };
 app.use(cors(corsOptions));
-*/
-app.use(cors());
+
 
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
