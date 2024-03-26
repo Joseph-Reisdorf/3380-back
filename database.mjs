@@ -11,6 +11,7 @@ const DB_HOST = process.env.DB_HOST;
 const DB_USER = process.env.DB_USER;
 const DB_PORT = process.env.DB_PORT;
 const DB_PASSWORD = process.env.DB_PASSWORD;
+const DB_NAME = process.env.DB_NAME;
 
 console.log(DB_HOST, DB_USER, DB_PORT, DB_PASSWORD);
 var pool = mysql.createPool({
@@ -19,7 +20,7 @@ var pool = mysql.createPool({
     user: DB_USER,
     port: parseInt(DB_PORT, 10),
     password: DB_PASSWORD,
-    database: "Online_Music_Library"
+    database: DB_NAME
 });
 
 
