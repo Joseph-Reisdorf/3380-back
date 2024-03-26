@@ -31,7 +31,7 @@ export const login = async (req, res) => {
                 }
 
                 if (result) {
-                    const token = jwt.sign({ id: user.person_id, role: user}, "tempsecret", {
+                    const token = jwt.sign({ id: user.person_id, role: user.person_role}, "tempsecret", {
                         // set token to expire in 2 hours
                         expiresIn: 7200
                     });
