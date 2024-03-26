@@ -7,9 +7,11 @@ export const getPersonById = (req, res) => {
 
   db.query(q, [person_id], (err, data) => {
     if (err) return res.status(500).json(err);
+    
     if (data.length === 0) {
       return res.status(404).json({ message: "Person not found" });
     };
+
     return res.json(data[0]);
   });
 };

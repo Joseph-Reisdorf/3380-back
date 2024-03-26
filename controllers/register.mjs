@@ -31,9 +31,6 @@ function isArtist(email) {
     return artistDomains.includes(domain);
 }
 
-
-// switch to .release() if we have connection pooling
-
 // This is the controller for the POST /register route
 export const register = async (req, res) => {
     //console.log("Responding to POST /register")
@@ -166,49 +163,4 @@ export const register = async (req, res) => {
             });  // transaction release
         }); // end hash password
     }); 
-};
-
-     /*
-    try {
-        // validate email domain
-        
-    
-
-        // add as person ----------------------
-        
-
-        const insertPersonResult = await db.query(transaction, person_query, [person_values]);
-        const personId = insertPersonResult.insertId;
-
-
-        // add as listener ----------------------
-        const listener_values = [
-            personId,
-            req.body.username,
-            isArtistBool ? 1 : 0, // set to 1 if artist, 0 if listener
-            0 // set online status to offline 0
-        ]
-        db.query(transaction, listener_query, [listener_values]);
-
-        // add as artist ----------------------
-        const artist_values = [
-            personId,
-            req.body.username, // default artist name is username
-            "Bio not set"
-        ]
-        if (isArtistBool) {
-            db.query(transaction, artist_query, [artist_values]);
-        }
-            
-
-        // commit transaction
-        await db.commitTransaction(transaction);
-        res.status(201).send("Person registered");
-
-    }
-    catch (error) {
-        // rollback transaction
-        await db.rollbackTransaction(transaction);
-        res.status(500).send("Error registering person");
-    }
-*/
+}; // end register function

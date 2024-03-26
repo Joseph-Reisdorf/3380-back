@@ -1,0 +1,101 @@
+The files in this folder are designed to query the database and possibly make changes to that data. Functions 
+should be created in individual .mjs files unless they are closely related.
+
+> **Note:** The "..." in the examples is a placeholder and does not literally mean to type "...".
+
+
+For consistency:
+    * Try to import and export in the same ways as the examples
+
+    * Use the same naming conventions as the examples lowerCamelCase for file names and function names
+
+    * --- Guidelines ---
+    * Attempt to constraint your database queries to the 2 functions types of queries used in getPerson.mjs and 
+      register.mjs. These are good examples as the getPerson shows the general structure of a single query, and 
+      register shows the general structure of a query that requires multiple queries to be executed.
+
+      Example 1:
+      In getPerson.mjs: -- defines multiple functions but we are looking at only getPersonById
+        >  export const getPersonById = (req, res) => {
+        >      const person_id = req.params.person_id;
+        >      const q = "SELECT * FROM person WHERE person_id=?";
+        >      
+        >      db.query(q, [person_id], (err, data) => {
+        >          if (err) return res.status(500).json(err);
+        >          
+        >          if (data.length === 0) {
+        >              return res.status(404).json({ message: "Person not found" });
+        >          };
+        >      
+        >          return res.json(data[0]);
+        >      });
+        >  };
+          * These show how to handle a query, and how to send good or bad responses (the status codes do have meaning).
+            Look up how the callback function works (with req and res for request info and response info respectively) in 
+            the db.query function to understand how to handle the data returned from the query. 
+
+      Example 2:
+      In register.mjs: -- defines multiple functions but we are looking at only register
+        * This function is much more complicated, as it defines a transaction (multiple associated requests that depend on
+          eachother and are invalid elsewise) executed in a single query.
+        * Its a little more complicated:
+            * In gereral, it begins by creating a connection with db.getConnection((err, db) => {...}) and then 
+              db.beginTransaction((err) => {...}) to start the transaction. These then have a series of db.query(...)
+              which must be rolled back (undone with db.rollback() and db.release() to release connection).
+                   Example rollback:
+                        if(err) {
+                            return db.rollback(() => {
+                                db.release(); 
+                                console.log(err);
+                                return res.status(500).send(err);
+                            });
+                        }
+              These files follow a "callback hell" as the nesing is requried for each query to be in order, and to properly
+              rollback if an error occures. Look closely at the code in register.mjs to further understand this process.
+              * For a deeper explaination of the structure paste the code into CHATGPT and ask for help on understanding the 
+                structure of the code.
+
+        * This shows how to handle a query that requires multiple queries to be executed. The callback function is 
+            used to handle the data returned from the query.
+        * When following the guide of this function, ignore the bcrypt.hash function as it is really only important for this
+            specific function.
+
+
+    * Try to keep the functions in this file as simple as possible, avoid nesting, and don't be
+      afraid to create multiple functions to break up the logic.
+
+
+
+-------------------------------------------------------------
+More examples:
+
+## Example 1
+
+This example demonstrates how to structure a function that queries the database. 
+
+import db from "../database.mjs";
+
+export const descriptiveFunctionName = (req, res) => {
+    // Additional code here
+
+    const q = // The SQL query, for example, "SELECT * FROM album WHERE album_id=?"
+
+    // Execute the query
+    db.query(q, [/* Replace question marks in 'q' with actual values */], (err, data) => {
+        // This is a callback function that handles the query results
+    });
+}
+
+export const descriptiveFunctionName2 = (req, res) => {
+    // Additional code here
+
+    const q = // The SQL query, for example, "SELECT * FROM album WHERE album_id=?"
+
+    // Execute the query
+    db.query(q, [/* Replace question marks in 'q' with actual values */], (err, data) => {
+        // This is a callback function that handles the query results
+    });
+}
+
+----------- This file would then be imported into the route where the functionality is used as follows:
+                import { descriptiveFunctionName, descriptiveFunctionName2 } from "../functions/descriptiveFunctionName.mjs";

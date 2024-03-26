@@ -3,12 +3,13 @@
 import dotenv from 'dotenv';
 dotenv.config({ path: './.env.local' });
 
+// Import libraries
 import express from "express"; 
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 
-
+// Import routes
 import artistRoute from "./routes/artist_route.mjs";
 import albumRoute from "./routes/album_route.mjs";
 import debugPersonRoute from "./routes/debug_person_route.mjs";
@@ -20,11 +21,6 @@ import userAuthRoute from "./routes/user_auth_route.mjs";
 const app = express(); // defines express app for handling requests
 
 // Middleware for handeling JSON data and allowing database requests
-
-// Origins allowed to make requests to the server, add production later
-//const allowedOrigins = ['http://localhost:3000'
-                      /*'Production_URL.com',*///];
-                      
 const FRONT_URL = process.env.REACT_APP_FRONT_URL;
 console.log(FRONT_URL);
 
