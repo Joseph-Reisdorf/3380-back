@@ -16,6 +16,7 @@ import debugPersonRoute from "./routes/debug_person_route.mjs";
 import loginRoute from "./routes/login_route.mjs";
 import registerRoute from "./routes/register_route.mjs";
 import userAuthRoute from "./routes/user_auth_route.mjs";
+import libraryRoute from "./routes/libraryRoute.mjs";
 
 // Create express app
 const app = express(); // defines express app for handling requests
@@ -57,6 +58,7 @@ app.use("/debug_person", debugPersonRoute);
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/user_auth", userAuthRoute);
+app.use("/library", libraryRoute);
 
 
 const PORT = process.env.PORT || 8080;
