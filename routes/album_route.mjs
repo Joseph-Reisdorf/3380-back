@@ -1,5 +1,5 @@
 import express from "express";
-import { getAlbumById, getAlbumByArtist, getAlbums } from "../controllers/getAlbum.mjs";
+import { getAlbumById, getAlbumByArtist, getAlbums } from "../controllers/getAlbums.mjs";
 import { addAlbum, uploadTracks } from "../controllers/addAlbum.mjs";
 
 const router = express.Router();
