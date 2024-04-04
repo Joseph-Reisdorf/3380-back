@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS Online_Music_Library.album (
   album_id 				INT NOT NULL AUTO_INCREMENT,
   album_primary_artist_id INT NOT NULL,
   album_title 			VARCHAR(80) NOT NULL,
-  album_release_date 		TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  album_release_date 		TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   album_description 		TEXT	 NULL,
   album_cover_art BLOB NULL,
 --  album_genre INT NOT NULL, might add back later
