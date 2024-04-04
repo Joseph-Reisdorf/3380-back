@@ -14,8 +14,8 @@ export const getArtistById = (req, res) => {
     };
 
     // consider to change by not extracting data on this end, can be changed on front end like in getAlbum
-    const { artist_display_name, artist_email, artist_biography } = data[0];
-    const artistInfo = { artist_display_name, artist_email, artist_biography };
+    const { artist_display_name, artist_biography } = data[0];
+    const artistInfo = { artist_display_name, artist_biography };
     return res.json(artistInfo);
   });
 };
