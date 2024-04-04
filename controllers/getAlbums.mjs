@@ -4,30 +4,41 @@ import db from "../database.mjs";
 
 // get album by its id (primary key)
 export const getAlbumById = (req, res) => {
-  // album id stored in request from the URL parameters
   const album_id = req.params.album_id;
 
-  // SQL query to get album by its id
-  const q = "SELECT * FROM album WHERE album_id=?";
+  const q = `
+    SELECT a.*, t.* 
+    FROM album a 
+    JOIN album_song ast ON a.album_id = ast.album_song_album_id 
+    JOIN track t ON ast.album_song_track_id = t.track_id 
+    WHERE a.album_id = ?`;
 
-  // query the database, (err, data) is a callback function that 
-  // is called when the query is done, with the error from the request
-  // and the data gotten from the request
   db.query(q, [album_id], (err, data) => {
-    // unexperted error
     if (err) return res.status(500).json(err);
     
-    // if no album is gotten from query
     if (data.length === 0) {
       return res.status(404).json({ message: "Album not found" });
     };
 
+    const albumWithTracks = {
+      album_id: data[0].album_id,
+      album_primary_artist_id: data[0].album_primary_artist_id,
+      album_title: data[0].album_title,
+      album_release_date: data[0].album_release_date,
+      album_description: data[0].album_description,
+      album_cover_art: data[0].album_cover_art,
+      album_genre: data[0].album_genre,
+      tracks: data.map(track => ({
+        track_id: track.track_id,
+        track_primary_artist_id: track.track_primary_artist_id,
+        track_name: track.track_name,
+        track_file: track.track_file
+      }))
+    };
 
-    // album info, IDs are unique so only one album is gotten -> data[0] 
-    return res.json(data[0]);
+    return res.json(albumWithTracks);
   });
 };
-
 
 // get album by album_primary_artist_id
 export const getAlbumByArtist = (req, res) => {
