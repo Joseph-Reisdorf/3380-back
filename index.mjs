@@ -26,9 +26,9 @@ console.log(FRONT_URL);
 
 // Customized CORS - Similar to the manual approach
 const corsOptions = {
-    origin: FRONT_URL, // This should be the URL of the front-end app
+    origin: "http://localhost:3000", // This should be the URL of the front-end app
     credentials: true, // This is important for cookies, authorization headers with HTTPS 
-    allowedHeaders: ['Origin', 'Access-Control-Allow-Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'x-access-token', 'Authorization'],
+    allowedHeaders: ['Origin', 'Allow-Control-Allow-Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'x-access-token', 'Authorization'],
 };
 app.use(cors(corsOptions));
 
@@ -64,6 +64,6 @@ const PORT = process.env.PORT || 8080;
 // Start server listening on port 8080
 app.listen(PORT, () => {
     console.log("We stan Uma!");
-    console.log("Server is running on port 8080");
+    console.log("Server is running on port", PORT);
 });
 
