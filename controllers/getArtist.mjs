@@ -21,6 +21,17 @@ export const getArtistById = (req, res) => {
 };
 
 
+export const searchArtistByName = (req, res) => {
+  const { artist_display_name } = req.query;
+  const q = "SELECT * FROM artist WHERE artist_display_name LIKE ?";
+
+  db.query(q, [`%${artist_display_name}%`], (err, data) => {
+    if (err) return res.status(500).json(err);
+    return res.json(data);
+  });
+};
+
+
 export const getArtists = (req, res) => {
   const q = "SELECT * FROM artist";
 

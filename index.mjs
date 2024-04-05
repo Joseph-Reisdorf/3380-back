@@ -17,6 +17,8 @@ import loginRoute from "./routes/login_route.mjs";
 import registerRoute from "./routes/register_route.mjs";
 import userAuthRoute from "./routes/user_auth_route.mjs";
 import trackRoute from "./routes/track_route.mjs";
+import followRoute from "./routes/follow_route.mjs"
+import genreRoute from "./routes/genre_route.mjs"
 
 // Create express app
 const app = express(); // defines express app for handling requests
@@ -29,7 +31,7 @@ console.log(FRONT_URL);
 const corsOptions = {
     origin: "http://localhost:3000", // This should be the URL of the front-end app
     credentials: true, // This is important for cookies, authorization headers with HTTPS 
-    allowedHeaders: ['Origin', 'Allow-Control-Allow-Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'x-access-token', 'Authorization'],
+    allowedHeaders: ['Origin', 'Access-Control-Allow-Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'x-access-token', 'Authorization'],
 };
 app.use(cors(corsOptions));
 
@@ -61,7 +63,7 @@ app.use("/user_auth", userAuthRoute);
 app.use("/recents", recentsRoute);
 app.use("/tracks", trackRoute);
 app.use("/follow", followRoute);
-app.use("/tracks", trackRoute);
+app.use("/genre", genreRoute);
 
 
 const PORT = process.env.PORT || 8080;
