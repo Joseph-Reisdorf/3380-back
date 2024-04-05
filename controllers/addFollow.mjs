@@ -15,3 +15,4 @@ export const addFollow = (req, res) => {
         res.json(data);
     });
 };
+
