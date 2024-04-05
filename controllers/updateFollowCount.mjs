@@ -13,7 +13,5 @@ export const updateFollowCount = (artistId) => {
 
     db.query(q, [artistId], (err, data) => {
         if (err) throw err;
-
-        console.log(`Follow count updated for artist ID ${artistId}`);
     });
 };

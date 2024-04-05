@@ -4,9 +4,7 @@
 CREATE TABLE IF NOT EXISTS Online_Music_Library.artist (
   artist_id 				INT 			NOT NULL,
   artist_display_name 		VARCHAR(45) 	NOT NULL,
---  artist_email	 			VARCHAR(100) 	NOT NULL,
   artist_registration_date 	  TIMESTAMP 	NOT NULL DEFAULT CURRENT_TIMESTAMP,
--- artist_pfp 	      BLOB 			NULL, - might add back later
   artist_biography 			TEXT	 		NULL,
   follow_count      INT       NOT NULL DEFAULT 0;
   PRIMARY KEY (artist_id),
