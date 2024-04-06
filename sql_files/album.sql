@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS Online_Music_Library.album (
   album_release_date 		TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
   album_description 		TEXT	 NULL,
   album_cover_art BLOB NULL,
+  album_like_count INT DEFAULT 0,
 --  album_genre INT NOT NULL, might add back later
   
   PRIMARY KEY (album_id),

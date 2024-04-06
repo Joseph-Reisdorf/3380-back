@@ -1,21 +1,19 @@
 -- -----------------------------------------------------
--- Table Online_Music_Library.album_like
+-- Table Online_Music_Library.like
 -- -----------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS Online_Music_Library.album_like (
-  album_like_album_id INT NOT NULL,
-  album_like_listner_id INT NOT NULL,
-  album_like_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  like_id INT NOT NULL AUTO_INCREMENT,
+  listener_id INT NOT NULL,
+  album_id INT NOT NULL,
+  like_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-  PRIMARY KEY (album_like_album_id, album_like_listner_id),
+  PRIMARY KEY (like_id),
 
-  CONSTRAINT album_like_album_id_constraint
-    FOREIGN KEY (album_like_album_id)
-    REFERENCES Online_Music_Library.album (album_id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT album_like_listener_id_constraint
-    FOREIGN KEY (album_like_listner_id)
-    REFERENCES Online_Music_Library.listener (listener_id)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
+  FOREIGN KEY (listener_id) REFERENCES listener(listener_id),
+  FOREIGN KEY (album_id) REFERENCES album(album_id))
 ENGINE = InnoDB;
+
+
+
+
