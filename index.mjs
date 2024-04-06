@@ -19,6 +19,7 @@ import userAuthRoute from "./routes/user_auth_route.mjs";
 import trackRoute from "./routes/track_route.mjs";
 import followRoute from "./routes/follow_route.mjs"
 import genreRoute from "./routes/genre_route.mjs"
+import recentsRoute from "./routes/recents_route.mjs"
 
 // Create express app
 const app = express(); // defines express app for handling requests
