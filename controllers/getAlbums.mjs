@@ -24,6 +24,7 @@ export const getAlbumById = (req, res) => {
       album_id: data[0].album_id,
       album_primary_artist_id: data[0].album_primary_artist_id,
       album_title: data[0].album_title,
+      album_like_count: data[0].album_like_count,
       album_release_date: data[0].album_release_date,
       album_description: data[0].album_description,
       album_cover_art: data[0].album_cover_art,
