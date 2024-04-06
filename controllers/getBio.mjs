@@ -4,7 +4,7 @@ export const getBiography = (req, res) => {
 
     const artistId = req.params.artist_id; 
 
-    const query = "SELECT artist_biography FROM artist WHERE artist_id = ?";
+    const query = "SELECT artist_display_name, artist_biography, follow_count FROM artist WHERE artist_id = ?";
 
     db.query(query, [artistId], (err, results) => {
         if (err) {
