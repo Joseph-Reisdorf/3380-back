@@ -5,7 +5,7 @@ import { getBiography } from "../controllers/getBio.mjs";
 
 const router = express.Router();
 
-router.post("/add_biography", addBiography);
-router.get("/get_biography", getBiography);
+router.post("/add_biography/:artist_id/:artist_biography", addBiography);
+router.get("/get_biography/:artist_id", getBiography);
 
 export default router;
