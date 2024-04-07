@@ -20,6 +20,7 @@ import trackRoute from "./routes/track_route.mjs";
 import followRoute from "./routes/follow_route.mjs"
 import genreRoute from "./routes/genre_route.mjs"
 import recentsRoute from "./routes/recents_route.mjs"
+import bioRoute from "./routes/bio_route.mjs"
 
 // Create express app
 const app = express(); // defines express app for handling requests
@@ -65,6 +66,7 @@ app.use("/recents", recentsRoute);
 app.use("/tracks", trackRoute);
 app.use("/follow", followRoute);
 app.use("/genre", genreRoute);
+app.use("/bio", bioRoute);
 
 
 const PORT = process.env.PORT || 8080;
