@@ -3,6 +3,6 @@ import { getRecents } from "../controllers/getRecents.mjs";
 
 const router = express.Router();
 
-router.get("/recents", getRecents);
+router.get("/get_recents", getRecents);
 
 export default router;
