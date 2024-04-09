@@ -20,7 +20,8 @@ import trackRoute from "./routes/track_route.mjs";
 import followRoute from "./routes/follow_route.mjs"
 import genreRoute from "./routes/genre_route.mjs"
 import likeRoute from "./routes/like_route.mjs"
-import addAlbumRoute from "./routes/add_album_route.mjs"
+import addAlbumRoute from "./routes/add_album_route.mjs";
+import notificationsRoute from "./routes/notifications_route.mjs"
 
 // Create express app
 const app = express(); // defines express app for handling requests
@@ -31,7 +32,7 @@ console.log(FRONT_URL);
 
 // Customized CORS - Similar to the manual approach
 const corsOptions = {
-    origin: "http://localhost:3000", // This should be the URL of the front-end app
+    origin: FRONT_URL, // This should be the URL of the front-end app
     credentials: true, // This is important for cookies, authorization headers with HTTPS 
     allowedHeaders: ['Origin', 'Access-Control-Allow-Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'x-access-token', 'Authorization'],
 };
@@ -66,7 +67,8 @@ app.use("/tracks", trackRoute);
 app.use("/follow", followRoute);
 app.use("/genre", genreRoute);
 app.use("/like", likeRoute);
-app.use('/artist_dashboard/add_album', addAlbumRoute)
+app.use('/artist_dashboard/add_album', addAlbumRoute);
+app.use('/notifications', notificationsRoute)
 
 const PORT = process.env.PORT || 8080;
 
