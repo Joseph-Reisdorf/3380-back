@@ -22,6 +22,7 @@ import genreRoute from "./routes/genre_route.mjs"
 import recentsRoute from "./routes/recents_route.mjs"
 import bioRoute from "./routes/bio_route.mjs"
 import dashboardRoute from "./routes/dashboard_route.mjs";
+import adminDashboard from "./routes/admin_route.mjs";
 
 // Create express app
 const app = express(); // defines express app for handling requests
@@ -69,6 +70,7 @@ app.use("/follow", followRoute);
 app.use("/genre", genreRoute);
 app.use("/bio", bioRoute);
 app.use("/dashboard", dashboardRoute);
+app.use("/admin", adminDashboard);
 
 
 const PORT = process.env.PORT || 8080;
