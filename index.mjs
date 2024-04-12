@@ -18,7 +18,6 @@ import registerRoute from "./routes/register_route.mjs";
 import userAuthRoute from "./routes/user_auth_route.mjs";
 import trackRoute from "./routes/track_route.mjs";
 import searchRoute from "./routes/search_route.mjs";
-import playlistRoute from "./routes/playlist_route.mjs";
 
 // Create express app
 const app = express(); // defines express app for handling requests

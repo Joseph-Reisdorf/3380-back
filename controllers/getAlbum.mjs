@@ -30,7 +30,7 @@ export const getAlbumById = (req, res) => {
 
 
 // get album by album_primary_artist_id
-export const getAlbumByArtist = (req, res) => {
+export const getAlbumsByArtist = (req, res) => {
   const artist_id = req.params.artist_id;
   const q = "SELECT * FROM album WHERE album_primary_artist_id=?";
 

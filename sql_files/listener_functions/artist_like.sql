@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS Online_Music_Library.artist_like (
 
   PRIMARY KEY (artist_like_artist_id, artist_like_listener_id),
 
-  CONSTRAINT altist_like_artist_id_constraint
+  CONSTRAINT artist_like_artist_id_constraint
     FOREIGN KEY (artist_like_artist_id)
     REFERENCES Online_Music_Library.artist (artist_id)
     ON DELETE CASCADE
