@@ -20,16 +20,40 @@ export const getListeners = (req, res) => {
     export const delArtists = (req, res) => {
       const artistId = req.params.artist_id; // Get artist ID from URL params
   
-      // Assuming other parameters are sent in the request body
-      const { artist_display_name, artist_registration_date, artist_biography, follow_count } = req.body;
+      // First transaction to delete follow records and the artist
+      const q1 = `
+          START TRANSACTION;
+          DELETE FROM follow WHERE artist_id = ?;
+          DELETE FROM artist WHERE artist_id = ?;
+          COMMIT;
+      `;
   
-      const q = "DELETE FROM artist WHERE artist_id = ?";
-      db.query(q, [artistId], (err, data) => {
-          if (err) {
-              console.error("Error deleting artist:", err);
+      // Second transaction to delete albums associated with the artist
+      const q2 = `
+          START TRANSACTION;
+          DELETE artist, album
+          FROM artist
+          LEFT JOIN album ON artist.artist_id = album.album_primary_artist_id
+          WHERE artist.artist_id = ?;
+          COMMIT;
+      `;
+  
+      // Execute the first transaction
+      db.query(q1, [artistId, artistId], (err1, data1) => {
+          if (err1) {
+              console.error("Error deleting artist and follow records:", err1);
               return res.status(500).json({ error: "Internal server error" });
           }
-          return res.json(data);
+  
+          // Execute the second transaction
+          db.query(q2, [artistId], (err2, data2) => {
+              if (err2) {
+                  console.error("Error deleting artist and associated albums:", err2);
+                  return res.status(500).json({ error: "Internal server error" });
+              }
+              
+              return res.json({ success: true });
+          });
       });
   };
-
+  
