@@ -18,15 +18,18 @@ export const getListeners = (req, res) => {
     };
 
     export const delArtists = (req, res) => {
-        const artistId = req.params.artist_id; 
-        const q = "DELETE FROM artist WHERE artist_id = ?";
-        db.query(q, [artistId], (err, data) => {
-            if (err) {
-                console.error("Error deleting artist:", err);
-                return res.status(500).json({ error: "Internal server error" });
-            }
-            return res.json(data);
-        });
-    };
-    
+      const artistId = req.params.artist_id; // Get artist ID from URL params
+  
+      // Assuming other parameters are sent in the request body
+      const { artist_display_name, artist_registration_date, artist_biography, follow_count } = req.body;
+  
+      const q = "DELETE FROM artist WHERE artist_id = ?";
+      db.query(q, [artistId], (err, data) => {
+          if (err) {
+              console.error("Error deleting artist:", err);
+              return res.status(500).json({ error: "Internal server error" });
+          }
+          return res.json(data);
+      });
+  };
 
