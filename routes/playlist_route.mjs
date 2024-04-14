@@ -1,12 +1,15 @@
 import express from "express";
-import { getPlaylistById, getPlaylists } from "../controllers/getPlaylist.mjs";
+import { getPlaylist, searchPlaylistByName, getPlaylistByListenerId }from "../controllers/getPlaylist.mjs";
 import { addPlaylist } from "../controllers/addPlaylist.mjs";
 
 const router = express.Router();
 
-router.get("/find_playlist_by_id/:playlist_id", getPlaylistById);
-router.get("/get_playlists", getPlaylists);
+// path: /playlists/
+router.get("/get_playlist", getPlaylist);
+router.get("search", searchPlaylistByName);
+router.get("/get_playlists_by_listener_id/:listener_id", getPlaylistByListenerId);
 
-router.post("/add_playlist", addPlaylist);
+router.post("/add_playlist", addPlaylist); 
+
 
 export default router;
