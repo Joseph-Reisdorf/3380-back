@@ -1,7 +1,9 @@
 import db from "../database.mjs";
 
 export const getTracks = (req, res) => {
-    const q = "SELECT track_id, track_primary_artist_id, track_name FROM track";
+    const q = `SELECT track_id, track_release_date, track_name, artist_display_name 
+               FROM track, artist
+               WHERE track_primary_artist_id = artist_id`;
     
     db.query(q, (err, tracks) => {
         if (err) return res.status(500).json(err);
