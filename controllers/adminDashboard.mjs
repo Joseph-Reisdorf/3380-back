@@ -93,5 +93,27 @@ export const showArtistReport = (req, res) => {
     });
 };
 
+export const showListenerReport = (req, res) => {
+    const { startMonth, endMonth } = req.params;
+
+    const listenerJoinMonthQuery = `
+    SELECT listener.listener_id, listener.listener_username, person.person_registration_date
+    FROM listener
+    JOIN person ON listener.listener_id = person.person_id
+    WHERE person.person_registration_date BETWEEN ? AND ?
+    AND listener.listener_is_artist = 'l';
+    ;
+    `;
+
+    db.query(listenerJoinMonthQuery, [startMonth, endMonth], (err, data) => {
+        if (err) {
+            console.error("Error fetching listener for the specified month range:", err);
+            return res.status(500).json({ error: "Internal server error" });
+        }
+
+        return res.json({ data });
+    });
+};
+
 
   
