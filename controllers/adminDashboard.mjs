@@ -73,5 +73,25 @@ export const getListeners = (req, res) => {
     });
 };
 
-    
+export const showArtistReport = (req, res) => {
+    const { startMonth, endMonth } = req.params;
+
+    const artistJoinMonthQuery = `
+    SELECT artist_id, artist_display_name, artist_registration_date
+    FROM artist
+    WHERE artist_registration_date BETWEEN ? AND ?;
+    ;
+    `;
+
+    db.query(artistJoinMonthQuery, [startMonth, endMonth], (err, data) => {
+        if (err) {
+            console.error("Error fetching artists for the specified month range:", err);
+            return res.status(500).json({ error: "Internal server error" });
+        }
+
+        return res.json({ data });
+    });
+};
+
+
   
