@@ -1,21 +1,5 @@
 import db from "../database.mjs";
 
-export const getArtists = (req, res) => {
-    const q = "SELECT * FROM artist";
-  
-    db.query(q, (err, data) => {
-      if (err) return res.status(500).json(err);
-      return res.json(data);
-    });
-  };
-
-export const getListeners = (req, res) => {
-    const q = "SELECT * FROM listener WHERE listener_is_artist = 0";
-    db.query(q, (err, data) => {
-        if (err) return res.status(500).json(err);
-        return res.json(data);
-      });
-    };
 
     export const delArtists = (req, res) => {
         const artistId = req.params.artist_id; // Get artist ID from URL params
@@ -115,5 +99,48 @@ export const showListenerReport = (req, res) => {
     });
 };
 
+export const generateArtistTable = (req, res) => {
+    const monthJoinArtist = `SELECT
+    CASE
+        WHEN month_number = 1 THEN 'January'
+        WHEN month_number = 2 THEN 'February'
+        WHEN month_number = 3 THEN 'March'
+        WHEN month_number = 4 THEN 'April'
+        WHEN month_number = 5 THEN 'May'
+        WHEN month_number = 6 THEN 'June'
+        WHEN month_number = 7 THEN 'July'
+        WHEN month_number = 8 THEN 'August'
+        WHEN month_number = 9 THEN 'September'
+        WHEN month_number = 10 THEN 'October'
+        WHEN month_number = 11 THEN 'November'
+        WHEN month_number = 12 THEN 'December'
+    END AS registration_month,
+    COUNT(*) AS new_artists_count
+FROM (
+    SELECT
+        YEAR(artist_registration_date) AS registration_year,
+        MONTH(artist_registration_date) AS month_number,
+        DATE_FORMAT(artist_registration_date, '%Y-%m-01') AS truncated_date
+    FROM
+        artist
+    WHERE
+        artist_registration_date >= DATE_SUB(CURRENT_DATE(), INTERVAL 12 MONTH)
+) AS subquery
+GROUP BY
+    registration_year,
+    month_number
+ORDER BY
+    registration_year ASC,
+    month_number ASC;
+    `;
+    db.query(monthJoinArtist, (err, data) => {
+        if (err) {
+            console.error("Error fetching artist join month count:", err);
+            return res.status(500).json({ error: "Internal server error" });
+        }
+
+        return res.json({ data });
+    });
+}
 
   
