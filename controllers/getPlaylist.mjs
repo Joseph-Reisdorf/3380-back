@@ -28,3 +28,18 @@ export const getPlaylistByListenerId = (req, res) => {
     return res.json(data);
   });
 }
+
+export const getTracksByPlaylistId = (req, res) => {
+  const playlist_id = req.params.playlist_id;
+  const q = `
+    SELECT track_id, track_name
+    FROM track, playlist_song
+    WHERE track.track_id = playlist_song.playlist_song_track_id
+    AND playlist_song.playlist_song_playlist_id = ?
+  `;
+
+  db.query(q, [playlist_id], (err, data) => {
+    if (err) return res.status(500).json(err);
+    return res.json(data);
+  });
+}

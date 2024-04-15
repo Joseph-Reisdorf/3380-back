@@ -73,3 +73,23 @@ export const getTracksByAlbumId = (req, res) => {
         return res.json(tracks);
     });
 }
+
+export const getTracksByListenTo = (req, res) => {
+    const listener_id = req.params.listener_id;
+    const q = `
+      SELECT t.track_id, t.track_name, t.track_genre, t.track_release_date
+      FROM track as t
+      JOIN listen_to as l ON t.track_id = l.listen_to_track_id
+      WHERE l.listen_to_listener_id = ?
+    `;
+
+    db.query(q, [listener_id], (err, tracks) => {
+        if (err) return res.status(500).json(err);
+        if (tracks.length === 0) {
+            return res.status(404).json({ message: "No tracks found for this listener" });
+        };
+        return res.json(tracks);
+    });
+}
+
+

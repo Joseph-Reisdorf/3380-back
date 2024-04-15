@@ -79,6 +79,17 @@ export const addTrack = (req, res) => {
 
 };
 
+
+export const listenTo = (req, res) => {
+    const { track_id, listener_id } = req.params;
+    const q = "INSERT INTO listen_to (listen_to_track_id, listen_to_listener_id) VALUES (?, ?)";
+
+    db.query(q, [track_id, listener_id], (err, result) => {
+        if (err) return res.status(500).json(err);
+        return res.json({ message: "Track listened to successfully" });
+    });
+}
+
 /*
 CREATE TABLE IF NOT EXISTS Online_Music_Library.track (
   track_id 					INT 		NOT NULL 	AUTO_INCREMENT,
