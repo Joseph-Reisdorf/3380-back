@@ -2,14 +2,18 @@ import db from "../database.mjs";
 
 export const getAgeData = (req, res) => {
     const artist_id = req.params.artist_id;
-    const q =  `SELECT COUNT( *) as count, FLOOR(DATEDIFF(CURRENT_DATE(), person_birthdate) / 365.25) AS listener_age
-    FROM artist, follow, listener, person
-    WHERE 
-        artist.artist_id = follow.artist_id
-        AND listener.listener_id = follow.listener_id
-        AND listener.listener_id = person.person_id
-        AND artist.artist_id = ?
-        group by listener_age `;
+    const q =  `SELECT COUNT(*) AS count, FLOOR(DATEDIFF(CURRENT_DATE(), person_birthdate) / 365.25) AS listener_age
+    FROM artist
+    INNER JOIN artist_like ON artist.artist_id = artist_like.artist_like_artist_id
+    INNER JOIN listener ON listener.listener_id = artist_like.artist_like_listener_id
+    INNER JOIN person ON person.person_id = listener.listener_id
+    WHERE artist.artist_id = ?
+    GROUP BY listener_age;
+     `;
+
+    // const q = `SELECT Count(*) as count, 
+    // From artist_like
+    // WHERE artist_like_artist_id = ?`
   
     db.query(q, [artist_id], (err, data) => {
       if (err) return res.status(500).json(err);
