@@ -21,6 +21,8 @@ import followRoute from "./routes/follow_route.mjs"
 import genreRoute from "./routes/genre_route.mjs"
 import likeRoute from "./routes/like_route.mjs"
 import addAlbumRoute from "./routes/add_album_route.mjs"
+import albumClicksRoute from "./routes/album_clicks_route.mjs"
+import adminDashboard from "./routes/admin_route.mjs";
 
 // Create express app
 const app = express(); // defines express app for handling requests
@@ -67,6 +69,8 @@ app.use("/follow", followRoute);
 app.use("/genre", genreRoute);
 app.use("/like", likeRoute);
 app.use('/artist_dashboard/add_album', addAlbumRoute)
+app.use('/albumClicks', albumClicksRoute)
+app.use("/admin", adminDashboard);
 
 const PORT = process.env.PORT || 8080;
 
