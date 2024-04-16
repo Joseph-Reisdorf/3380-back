@@ -21,4 +21,3 @@ CREATE TABLE IF NOT EXISTS Online_Music_Library.artist_like (
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
-

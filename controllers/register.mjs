@@ -17,7 +17,8 @@ function validateEmail(email) {
                           "cougarnet.uh.edu", 
                           "yahoo.com", 
                           "outlook.com", 
-                          "hotmail.com"];
+                          "hotmail.com",
+                          "company.com"];
     
     return validDomains.includes(domain);
 }
@@ -31,13 +32,15 @@ function isArtist(email) {
     return artistDomains.includes(domain);
 }
 
+
+
 // This is the controller for the POST /register route
 export const register = async (req, res) => {
     //console.log("Responding to POST /register")
 
     const validEmail = validateEmail(req.body.email);
     const isArtistBool = isArtist(req.body.email);
-    // const isEmployee = isEmployee(req.body.email);
+    const isEmployee = isEmployee(req.body.email);
 
     if (!validEmail) {
         return res.status(400).send("Invalid email domain");
@@ -48,6 +51,7 @@ export const register = async (req, res) => {
     const listener_query = "INSERT INTO listener (listener_id, listener_username, listener_is_artist, listener_online_status) VALUES (?, ?, ?, ?)";
     const artist_query = "INSERT INTO artist (artist_id, artist_display_name, artist_biography) VALUES (?, ?, ?)";
     
+
     
     const person_values = [
         req.body.first_name,
@@ -159,6 +163,9 @@ export const register = async (req, res) => {
                             });
                         }
                     }); // listener query release
+                    // else employee || admin
+
+
                 }); // person query release
             });  // transaction release
         }); // end hash password
