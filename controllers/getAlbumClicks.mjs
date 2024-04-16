@@ -23,7 +23,7 @@ export const showAlbumReport = (req, res) => {
         AND l.listen_to_datetime BETWEEN ? AND ?;
     `;
 
-    db.query(albumClickMonthQuery, [listenerId, startMonth, endMonth, ], (err, data) => {
+    db.query(albumClickMonthQuery, [listenerId, startMonth, endMonth ], (err, data) => {
         if (err) {
             console.error("Error fetching albums for the specified month range:", err);
             return res.status(500).json({ error: "Internal server error" });
