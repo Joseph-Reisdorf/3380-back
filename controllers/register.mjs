@@ -17,7 +17,8 @@ function validateEmail(email) {
                           "cougarnet.uh.edu", 
                           "yahoo.com", 
                           "outlook.com", 
-                          "hotmail.com"];
+                          "hotmail.com",
+                          "company.com"];
     
     return validDomains.includes(domain);
 }
@@ -31,13 +32,36 @@ function isArtist(email) {
     return artistDomains.includes(domain);
 }
 
+function isEmployee(email) {
+    const domain = getDomain(email);
+    
+    const employeeDomains = ["company.com"];
+    
+    return employeeDomains.includes(domain);
+}
+
+function isAdmin(email) {
+    const domain = getDomain(email);
+
+    const adminDomains = ["central.company.com"];
+
+    return adminDomains.includes(domain);
+}
+
+function getRole(email) {
+    if (isArtist(email)) {
+        return 'a';
+    } else {
+        return 'l';
+    }
+}
+
 // This is the controller for the POST /register route
 export const register = async (req, res) => {
     //console.log("Responding to POST /register")
 
     const validEmail = validateEmail(req.body.email);
     const isArtistBool = isArtist(req.body.email);
-    // const isEmployee = isEmployee(req.body.email);
 
     if (!validEmail) {
         return res.status(400).send("Invalid email domain");
@@ -48,7 +72,6 @@ export const register = async (req, res) => {
     const listener_query = "INSERT INTO listener (listener_id, listener_username, listener_is_artist, listener_online_status) VALUES (?, ?, ?, ?)";
     const artist_query = "INSERT INTO artist (artist_id, artist_display_name, artist_biography) VALUES (?, ?, ?)";
     
-    
     const person_values = [
         req.body.first_name,
         req.body.middle_initial,
@@ -56,7 +79,7 @@ export const register = async (req, res) => {
         req.body.email,
         req.body.birthdate,
         req.body.password,
-        isArtistBool ? 'a' : 'l', 
+        getRole(req.body.email) 
     ];
 
     
@@ -93,7 +116,7 @@ export const register = async (req, res) => {
                     }
 
                     const personId = result.insertId; // get for next two transactions
-
+                    
                     // add as listener ----------------------
                     const listener_values = [
                         personId,
