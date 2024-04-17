@@ -55,3 +55,20 @@ export const getLikedArtists = (req, res) => {
     res.json(results);
   });
 };
+
+export const getArtistLikesCount = (req, res) => {
+  const id = req.params.artist_id;
+  const q = `
+    SELECT COUNT(artist_like_artist_id) as likes
+    FROM artist_like
+    WHERE artist_like_artist_id = ?
+  `;
+
+  db.query(q, [id], (err, results) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Internal server error');
+    }
+    res.json(results[0]);
+  });
+}
