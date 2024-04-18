@@ -28,7 +28,15 @@ export const searchArtistByName = (req, res) => {
 
 
 export const getArtists = (req, res) => {
-  const q = "SELECT * FROM artist";
+  const q = ` SELECT
+                a.*,
+                COUNT(l.artist_like_listener_id) AS follower_count
+              FROM
+                artist a
+              LEFT JOIN
+                artist_like l ON a.artist_id = l.artist_like_artist_id
+              GROUP BY
+                a.artist_id`;
 
   db.query(q, (err, data) => {
     if (err) return res.status(500).json(err);
