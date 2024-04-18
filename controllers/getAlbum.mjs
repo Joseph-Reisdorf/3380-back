@@ -57,6 +57,18 @@ export const getAlbums = (req, res) => {
   });
 };
 
+export const getAlbumTitleByArtist = (req, res) => {
+  const artist_id = req.params.artist_id;
+  const q = "SELECT album_title FROM album WHERE album_primary_artist_id=?";
+
+  db.query(q, [artist_id], (err, albums) => {
+    if (err) return res.status(500).json(err);
+    if (albums.length === 0) {
+      return res.status(404).json({ message: "No albums found for this artist" });
+    };
+    return res.json(albums);
+  });
+};
 
 export const getAlbumLikeByPersonID = (req, res) => {
   const album_id = req.params.album_id;

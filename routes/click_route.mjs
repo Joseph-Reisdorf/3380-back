@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 router.get("/get_clicks", getClicks);
-router.get("/show_album_report/:listenerId/:startMonth/:endMonth", showAlbumReport);
+router.get("/show_album_report/:listenerId/:startMonth/:endMonth/:albumTitle?", showAlbumReport);
 router.get("/generateAlbumTable", generateAlbumTable);
 router.post("/add_clicks", addClicks);
 

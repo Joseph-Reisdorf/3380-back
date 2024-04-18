@@ -11,19 +11,27 @@ export const getClicks = (req, res) => {
 };
 
 export const showAlbumReport = (req, res) => {
-    const { startMonth, endMonth } = req.params;
+    const { startMonth, endMonth, albumTitle } = req.params;
     const listenerId = req.params.listenerId;
 
-    const albumClickMonthQuery = `
-        SELECT l.listen_to_listener_id, t.track_name, l.listen_to_id, l.listen_to_datetime
-        FROM listen_to l
-        INNER JOIN track t ON l.listen_to_track_id = t.track_id
-        INNER JOIN artist ar ON t.track_primary_artist_id = ar.artist_id
-        WHERE ar.artist_id = ? 
-        AND l.listen_to_datetime BETWEEN ? AND ?;
-    `;
+    let albumClickMonthQuery = `
+    SELECT l.listen_to_listener_id, t.track_name, l.listen_to_id, l.listen_to_datetime, p.person_email, lis.listener_username
+    FROM listen_to l
+    INNER JOIN track t ON l.listen_to_track_id = t.track_id
+    INNER JOIN listener lis on l.listen_to_listener_id = lis.listener_id
+    INNER JOIN person p on l.listen_to_listener_id = p.person_id
+    INNER JOIN artist ar ON t.track_primary_artist_id = ar.artist_id
+    INNER JOIN album_song a_s ON t.track_id = a_s.album_song_track_id
+    INNER JOIN album a ON a_s.album_song_album_id = a.album_id
+    WHERE ar.artist_id = ? 
+    AND l.listen_to_datetime BETWEEN ? AND ?`;
 
-    db.query(albumClickMonthQuery, [listenerId, startMonth, endMonth ], (err, data) => {
+if (albumTitle) {
+    albumClickMonthQuery += ` AND a.album_title = ?`;
+}
+
+
+    db.query(albumClickMonthQuery, [listenerId, startMonth, endMonth, albumTitle], (err, data) => {
         if (err) {
             console.error("Error fetching albums for the specified month range:", err);
             return res.status(500).json({ error: "Internal server error" });
@@ -49,7 +57,7 @@ export const generateAlbumTable = (req, res) => {
         WHEN listen_month_number = 11 THEN 'November'
         WHEN listen_month_number = 12 THEN 'December'
     END AS datetime,
-    COUNT(*) AS new_artists_count
+    COUNT(*) AS new_plays_count
 FROM (
     SELECT
         YEAR(listen_to_datetime) AS listen_year,
