@@ -15,7 +15,7 @@ const DB_NAME = process.env.DB_NAME;
 
 console.log(DB_HOST, DB_USER, DB_PORT, DB_PASSWORD);
 var pool = mysql.createPool({
-    connectionLimit: 10,
+    connectionLimit: 100,
     host: DB_HOST,
     user: DB_USER,
     port: parseInt(DB_PORT, 10),
