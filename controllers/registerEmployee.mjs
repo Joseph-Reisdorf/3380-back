@@ -41,7 +41,7 @@ function getRole(email) {
 // Registration function for an employee
 export const registerEmployee = async (req, res) => {
     const validEmail = validateEmail(req.body.email);
-
+    const isAdmin = req.body.isAdmin; 
     /*
     const req_values = [
         req.body.firstName,
@@ -70,7 +70,6 @@ export const registerEmployee = async (req, res) => {
         req.body.pwd, // This will be hashed below
         getRole(req.body.email)
     ];
-    console.log(person_values);
 
     db.getConnection((err, db) => {
         if (err) {
@@ -104,10 +103,7 @@ export const registerEmployee = async (req, res) => {
                     }
                     const personId = result.insertId; // get for next two transactions
 
-                    if (isAdmin(req.body.email) && manager_id === null) {
-                        req.body.managerId = personId;
-                    }
-
+                    
                     // add as employee ----------------------
                     const employeeValues = [
                         personId,
@@ -117,7 +113,7 @@ export const registerEmployee = async (req, res) => {
                         req.body.role,
                         req.body.salary,
                         req.body.hireDate,
-                        req.body.managerId
+                        ((req.body.managerId === '' && isAdmin) ? personId : req.body.managerId)
                     ];
                     db.query(employeeQuery, employeeValues, (err, result) => {
                         if (err) {

@@ -2,9 +2,22 @@ import db from "../database.mjs";
 
 
 export const getEmployees = (req, res) => {
-  const q = `SELECT employee_id, employee_firstname, employee_lastname, employee_role, employee_salary, employee_hire_date, employee_manager_id, department_name
-  FROM employee, department
-  WHERE employee.employee_department = department.department_id`;
+  const q = `SELECT
+              e.employee_id,
+              e.employee_firstname,
+              e.employee_lastname,
+              e.employee_role,
+              e.employee_salary,
+              e.employee_hire_date,
+              e.employee_manager_id,
+              d.department_name,
+              CONCAT(m.employee_firstname, ' ', m.employee_lastname) AS manager_name
+            FROM
+              employee e
+            JOIN
+              department d ON e.employee_department = d.department_id
+            LEFT JOIN
+              employee m ON e.employee_manager_id = m.employee_id`;
 
   db.query(q, (err, data) => {
     if (err) return res.status(500).json(err);
