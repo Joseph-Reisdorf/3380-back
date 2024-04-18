@@ -32,10 +32,24 @@ export const getPlaylistByListenerId = (req, res) => {
 export const getTracksByPlaylistId = (req, res) => {
   const playlist_id = req.params.playlist_id;
   const q = `
-    SELECT track_id, track_name
-    FROM track, playlist_song
-    WHERE track.track_id = playlist_song.playlist_song_track_id
-    AND playlist_song.playlist_song_playlist_id = ?
+            SELECT 
+              t.track_id, 
+              t.track_name,
+              t.track_genre,
+              t.track_release_date,
+              g.genre_name, 
+              t.track_primary_artist_id,
+              a.artist_display_name
+            FROM 
+              track t
+            JOIN 
+              playlist_song ps ON t.track_id = ps.playlist_song_track_id
+            LEFT JOIN 
+              genre g ON t.track_genre = g.genre_id
+            LEFT JOIN 
+              artist a ON t.track_primary_artist_id = a.artist_id
+            WHERE 
+              ps.playlist_song_playlist_id = ?;
   `;
 
   db.query(q, [playlist_id], (err, data) => {
