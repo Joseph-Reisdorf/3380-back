@@ -20,7 +20,7 @@ import trackRoute from "./routes/track_route.mjs";
 import searchRoute from "./routes/search_route.mjs";
 import playlistRoute from "./routes/playlist_route.mjs";
 
-import notificationRoute from "./routes/notification_route.mjs";
+import notificationRoute from "./routes/notification_routes.mjs";
 import employeeRoute from "./routes/employee_route.mjs";
 import departmentRoute from "./routes/department_route.mjs";
 import genreRoute from "./routes/genre_route.mjs";
@@ -68,6 +68,7 @@ app.use("/user_auth", userAuthRoute);
 app.use("/tracks", trackRoute);
 app.use("/search", searchRoute);
 app.use("/playlists", playlistRoute);
+
 app.use("/notifications", notificationRoute)
 app.use("/employees", employeeRoute);
 app.use("/departments", departmentRoute);
