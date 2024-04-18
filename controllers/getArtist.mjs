@@ -135,3 +135,4 @@ export const getArtistRankingByListens = (req, res) => {
     return res.json(data);
   });
 };
+

@@ -1,5 +1,5 @@
 import express from "express";
-import { getArtistById, getArtists, searchArtistByName }from "../controllers/getArtist.mjs";
+import { getArtistById, getArtists, searchArtistByName, getArtistRankingByAlbums, getArtistRankingByTracks, getArtistRankingByListens }from "../controllers/getArtist.mjs";
 import { likeArtist, unlikeArtist, getLikedArtists, getArtistLikesCount } from "../controllers/artistLike.mjs";
 const router = express.Router();
 
@@ -10,8 +10,16 @@ router.get("/get_artists", getArtists);
 router.get("/get_liked_artists/:person_id", getLikedArtists);
 router.get("/get_artist_likes_count/:artist_id", getArtistLikesCount);
 
+
+router.get("/get_artist_ranking_by_tracks", getArtistRankingByTracks);
+router.get("/get_artist_ranking_by_albums", getArtistRankingByAlbums);
+router.get("/get_artist_ranking_by_listens", getArtistRankingByListens);
+
+
 router.post("/like/:artist_id/:person_id", likeArtist);
 
 router.delete("/unlike/:artist_id/:person_id", unlikeArtist);
+
+
 
 export default router;
