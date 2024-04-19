@@ -47,23 +47,23 @@ export const getArtists = (req, res) => {
 export const getArtistRankingByTracks = (req, res) => {
   const { start_date, end_date } = req.query;
   const q = `
-    SELECT 
-      CONCAT(person.person_first_name, ' ', COALESCE(person.person_middle_initial, ''), ' ', person.person_last_name) AS full_name,
-      person.person_email,
-      person.person_birthdate,
-      COUNT(track.track_id) AS number_of_tracks
-    FROM 
-      Online_Music_Library.person
-    INNER JOIN 
-      Online_Music_Library.artist ON person.person_id = artist.artist_id
-    LEFT JOIN 
-      Online_Music_Library.track ON artist.artist_id = track.track_primary_artist_id
-    WHERE 
-      person.person_registration_date BETWEEN ? AND ?
-    GROUP BY 
-      artist.artist_id
-    ORDER BY 
-      number_of_tracks DESC;
+  SELECT 
+  CONCAT(person.person_first_name, ' ', COALESCE(person.person_middle_initial, ''), ' ', person.person_last_name) AS full_name,
+  person.person_email,
+  person.person_birthdate,
+  COUNT(track.track_id) AS number_of_tracks
+FROM 
+  Online_Music_Library.person
+INNER JOIN 
+  Online_Music_Library.artist ON person.person_id = artist.artist_id
+LEFT JOIN 
+  Online_Music_Library.track ON artist.artist_id = track.track_primary_artist_id
+WHERE 
+  person.person_registration_date BETWEEN '2024-04-01' AND '2024-04-20'
+GROUP BY 
+  artist.artist_id
+ORDER BY 
+  number_of_tracks DESC;
   `;
 
   db.query(q, [start_date, end_date], (err, data) => {
@@ -87,7 +87,7 @@ export const getArtistRankingByAlbums = (req, res) => {
     LEFT JOIN 
       Online_Music_Library.album ON artist.artist_id = album.album_primary_artist_id
     WHERE 
-      person.person_registration_date BETWEEN ? AND ?
+      person.person_registration_date BETWEEN '2024-04-01' AND '2024-04-20'
     GROUP BY 
       artist.artist_id
     ORDER BY 
@@ -103,26 +103,27 @@ export const getArtistRankingByAlbums = (req, res) => {
 export const getArtistRankingByListens = (req, res) => {
   const { start_date, end_date } = req.query;
   const q = `
-    SELECT 
-      CONCAT(person.person_first_name, ' ', COALESCE(person.person_middle_initial, ''), ' ', person.person_last_name) AS full_name,
-      person.person_email,
-      person.person_birthdate,
-      SUM(COALESCE(listen_to.listen_count, 0)) AS total_listens
-    FROM 
-      Online_Music_Library.person
-    INNER JOIN 
-      Online_Music_Library.artist ON person.person_id = artist.artist_id
-    LEFT JOIN 
-      (SELECT listen_to_track_id, COUNT(*) AS listen_count FROM Online_Music_Library.listen_to GROUP BY listen_to_track_id) AS listen_to 
-    ON track.track_id = listen_to.listen_to_track_id
-    LEFT JOIN 
-      Online_Music_Library.track ON artist.artist_id = track.track_primary_artist_id
-    WHERE 
-      person.person_registration_date BETWEEN ? AND ?
-    GROUP BY 
-      artist.artist_id
-    ORDER BY 
-      total_listens DESC;
+  SELECT 
+  CONCAT(person.person_first_name, ' ', COALESCE(person.person_middle_initial, ''), ' ', person.person_last_name) AS full_name,
+  person.person_email,
+  person.person_birthdate,
+  SUM(COALESCE(listen_to.listen_count, 0)) AS total_listens
+FROM 
+  Online_Music_Library.person
+INNER JOIN 
+  Online_Music_Library.artist ON person.person_id = artist.artist_id
+LEFT JOIN 
+  Online_Music_Library.track ON artist.artist_id = track.track_primary_artist_id
+LEFT JOIN 
+  (SELECT listen_to_track_id, COUNT(*) AS listen_count FROM Online_Music_Library.listen_to GROUP BY listen_to_track_id) AS listen_to 
+ON track.track_id = listen_to.listen_to_track_id
+WHERE 
+  person.person_registration_date BETWEEN ? AND ?
+GROUP BY 
+  artist.artist_id
+ORDER BY 
+  total_listens DESC;
+
   `;
 
   db.query(q, [start_date, end_date], (err, data) => {

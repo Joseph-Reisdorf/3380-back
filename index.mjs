@@ -18,6 +18,7 @@ import registerRoute from "./routes/register_route.mjs";
 import userAuthRoute from "./routes/user_auth_route.mjs";
 import trackRoute from "./routes/track_route.mjs";
 import searchRoute from "./routes/search_route.mjs";
+import adminRoute from "./routes/admin_route.mjs";
 
 // Create express app
 const app = express(); // defines express app for handling requests
@@ -61,6 +62,7 @@ app.use("/register", registerRoute);
 app.use("/user_auth", userAuthRoute);
 app.use("/tracks", trackRoute);
 app.use("/search", searchRoute);
+app.use("/admin", adminRoute);
 
 
 const PORT = process.env.PORT || 8080;
