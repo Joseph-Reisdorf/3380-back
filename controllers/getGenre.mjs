@@ -48,9 +48,15 @@ export const getAllGenreNames = (req, res) => {
   });
 };
 
+// Get most listened genres
 export const getMostListenedGenres = (req, res) => {
   const { startDate, endDate } = req.query;
 
+  // Format dates
+  const startDateFormatted = new Date(startDate).toISOString().split('T')[0];
+  const endDateFormatted = new Date(endDate).toISOString().split('T')[0];
+
+  // SQL query
   const query = `
     SELECT t.track_genre, COUNT(l.listen_to_id) AS listen_count
     FROM Online_Music_Library.listen_to l
@@ -60,20 +66,22 @@ export const getMostListenedGenres = (req, res) => {
     ORDER BY listen_count DESC;
   `;
 
-  db.query(query, [startDate, endDate], (err, data) => {
+  // Execute the query with formatted dates
+  db.query(query, [startDateFormatted, endDateFormatted], (err, data) => {
     if (err) return res.status(500).json(err);
     return res.json(data);
   });
 };
 
-
+// Get most listened songs by genre
 export const getMostListenedSongsByGenre = (req, res) => {
   const { selectedGenre, startDate, endDate } = req.query;
 
+  // Format dates
+  const startDateFormatted = new Date(startDate).toISOString().split('T')[0];
+  const endDateFormatted = new Date(endDate).toISOString().split('T')[0];
 
-  const values = [selectedGenre, startDate, endDate];
-
-  console.log(values);
+  // SQL query
   const query = `
     SELECT t.track_id, t.track_name, COUNT(l.listen_to_id) AS listen_count
     FROM Online_Music_Library.listen_to l
@@ -84,9 +92,9 @@ export const getMostListenedSongsByGenre = (req, res) => {
     LIMIT 5;
   `;
 
-  db.query(query, values, (err, data) => {
+  // Execute the query with formatted dates
+  db.query(query, [selectedGenre, startDateFormatted, endDateFormatted], (err, data) => {
     if (err) return res.status(500).json(err);
-    console.log(data)
     return res.json(data);
   });
 };

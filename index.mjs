@@ -59,6 +59,7 @@ app.use(session({
 }));
 
 // Routes
+// Routes
 app.use("/artists", artistRoute);
 app.use("/albums", albumRoute);
 app.use("/debug_person", debugPersonRoute);
@@ -74,6 +75,8 @@ app.use("/employees", employeeRoute);
 app.use("/departments", departmentRoute);
 app.use("/genres", genreRoute);
 app.use("/admin", adminRoute);
+
+
 
 const PORT = process.env.PORT || 8080;
 
