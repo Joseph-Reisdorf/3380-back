@@ -46,7 +46,7 @@ export const getAlbumsByArtist = (req, res) => {
 
 // get all albums
 export const getAlbums = (req, res) => {
-  const q = "SELECT * FROM album";
+  const q = "SELECT album_id, album_primary_artist_id, album_title, album_release_date, album_description FROM album";
 
   db.query(q, (err, albums) => {
     if (err) return res.status(500).json(err);
@@ -56,3 +56,36 @@ export const getAlbums = (req, res) => {
     return res.json(albums);
   });
 };
+
+export const getAlbumCoverById = (req, res) => {
+  const album_id = req.params.album_id;
+  const q = "SELECT album_cover_art FROM album WHERE album_id=?";
+
+  db.query(q, [album_id], (err, data) => {
+    if (err) return res.status(500).json(err);
+    if (data.length === 0) {
+      return res.status(404).json({ message: "Album not found" });
+    };
+    return res.json(data[0]);
+  });
+}
+
+export const getAlbumLikeByPersonID = (req, res) => {
+  const album_id = req.params.album_id;
+  const listener_id = req.params.listener_id;
+  const q = `
+    SELECT album_id 
+    FROM album, album_like, listener
+    WHERE album.album_id = album_like.album_id 
+    AND album_like.listener_id = listener.listener_id
+    AND listener.listener_id = ?
+  `;
+
+  db.query(q, [listener_id], (err, albums) => {
+    if (err) return res.status(500).json(err);
+    if (albums.length === 0) {
+      return res.status(404).json({ message: "No albums found" });
+    };
+    return res.json(albums);
+  });
+}

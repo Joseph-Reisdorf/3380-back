@@ -1,11 +1,11 @@
 import express from "express";
-import { getPeople } from "../controllers/getPerson.mjs";
+import { getPeople, getPersonById } from "../controllers/getPerson.mjs";
 import { addPerson } from "../controllers/addPerson.mjs";
 
 const router = express.Router();
 
 router.get("/get_people", getPeople);
-router.get("/get_person_by_id/:person_id", getPeople);
+router.get("/get_person_by_id/:person_id", getPersonById);
 
 
 

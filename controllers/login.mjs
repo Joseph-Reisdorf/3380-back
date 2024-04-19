@@ -31,15 +31,14 @@ export const login = async (req, res) => {
                 }
 
                 if (result) {
-                    const token = jwt.sign({ id: user.person_id, role: user}, "tempsecret", {
+                    const token = jwt.sign({ id: user.person_id, role: user.person_role}, process.env.JWT_SECRET, {
                         // set token to expire in 2 hours
                         expiresIn: 7200
                     });
-                    req.session.user_id = user.person_id;
-                    req.session.role = user.person_role;
-                    console.log("Session: " + req.session.user_id + " " + req.session.role);
-                    req.session.user = result;
-                    res.json({ auth: true, token: token, result: result });
+
+                    console.log("Session: " + user.person_id+ " " + user.person_role);
+ 
+                    res.json({ auth: true, token: token});
 
                 }
                 else {

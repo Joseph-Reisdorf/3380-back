@@ -1,7 +1,7 @@
 import db from "../database.mjs";
 import bcrypt from "bcrypt";
 
-const saltRounds = process.env.SALT_ROUNDS || 10;
+const saltRounds = parseInt(process.env.SALT_ROUNDS) || 10;
 
 // get domain from email
 function getDomain(email) {
@@ -17,7 +17,8 @@ function validateEmail(email) {
                           "cougarnet.uh.edu", 
                           "yahoo.com", 
                           "outlook.com", 
-                          "hotmail.com"];
+                          "hotmail.com",
+                          "company.com"];
     
     return validDomains.includes(domain);
 }
@@ -56,7 +57,7 @@ export const register = async (req, res) => {
         req.body.email,
         req.body.birthdate,
         req.body.password,
-        isArtistBool ? 'a' : 'l', 
+        getRole(req.body.email) 
     ];
 
     
@@ -93,7 +94,7 @@ export const register = async (req, res) => {
                     }
 
                     const personId = result.insertId; // get for next two transactions
-
+                    
                     // add as listener ----------------------
                     const listener_values = [
                         personId,
@@ -159,6 +160,9 @@ export const register = async (req, res) => {
                             });
                         }
                     }); // listener query release
+                    // else employee || admin
+
+
                 }); // person query release
             });  // transaction release
         }); // end hash password
