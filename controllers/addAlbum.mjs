@@ -30,16 +30,6 @@ export const addAlbum = (req, res) => {
     }
 
 
-    /*
-    const values = [
-        req.body.album_primary_artist_id,
-        req.body.album_title,
-        req.body.album_release_date,
-        req.body.album_description,
-        req.body.album_cover_art
-    ]
-
-    const q = "INSERT INTO album (album_primary_artist_id, album_title, album_release_date, album_description, album_cover_art) VALUES (?, ?, ?, ?, ?)";
-    */
+  
 
 };
