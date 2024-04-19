@@ -13,7 +13,6 @@ export const addAlbum = (req, res) => {
 
         db.query(q_default_date, values_default_date, (err, data) => {
             if (err) throw err;
-    
             res.json(data);
         });
     }
@@ -28,8 +27,4 @@ export const addAlbum = (req, res) => {
             res.json(data);
         });
     }
-
-
-  
-
 };
