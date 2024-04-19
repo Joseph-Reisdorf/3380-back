@@ -1,5 +1,5 @@
 import express from 'express';
-import { getNewNotifications } from '../controllers/getNewNotification.mjs';
+import { getNewNotifications } from '../controllers/getNotification.mjs';
 import { getNewFollowerAlerts, markFollowerAlertAsSeen } from '../controllers/followerAlert.mjs';
 
 

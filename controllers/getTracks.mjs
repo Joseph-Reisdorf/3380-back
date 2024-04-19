@@ -77,7 +77,7 @@ export const getTracksByAlbumId = (req, res) => {
 export const getTracksByListenTo = (req, res) => {
     const listener_id = req.params.listener_id;
     const q = `
-      SELECT t.track_id, t.track_name, t.track_genre, t.track_release_date
+      SELECT t.track_id, t.track_name, t.track_genre, t.track_release_date, l.listen_to_datetime
       FROM track as t
       JOIN listen_to as l ON t.track_id = l.listen_to_track_id
       WHERE l.listen_to_listener_id = ?

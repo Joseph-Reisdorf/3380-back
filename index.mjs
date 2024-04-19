@@ -70,14 +70,6 @@ app.use("/tracks", trackRoute);
 app.use("/search", searchRoute);
 app.use("/playlists", playlistRoute);
 
-app.use("/notifications", notificationRoute)
-app.use("/employees", employeeRoute);
-app.use("/departments", departmentRoute);
-app.use("/genres", genreRoute);
-app.use("/admin", adminRoute);
-
-
-
 const PORT = process.env.PORT || 8080;
 
 // Start server listening on port 8080
