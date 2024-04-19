@@ -13,8 +13,7 @@ router.get("/get_genres", getGenres);
 router.get("/get_all_genre_names", getAllGenreNames);
 
 // Route to get most listened genres
-router.get("/get_most_listened_genres", getMostListenedGenres);
-
-router.get("/get_most_listened_songs_by_genre", getMostListenedSongsByGenre);
+router.get("/get_most_listened_genres/:selectedGenre/:startDate/:endDate", getMostListenedGenres);
+router.get("/get_most_listened_songs_by_genre/:startDate/:endDate", getMostListenedSongsByGenre);
 
 export default router;
