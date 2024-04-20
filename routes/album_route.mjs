@@ -1,6 +1,6 @@
 import express from "express";
 import { getAlbumById, getAlbumsByArtist, getAlbums, getAlbumLikeByPersonID, getAlbumCoverById } from "../controllers/getAlbum.mjs";
-import { addAlbum } from "../controllers/addAlbum.mjs";
+import { addAlbum, deleteAlbum } from "../controllers/addAlbum.mjs";
 
 
 const router = express.Router();
@@ -12,5 +12,5 @@ router.get("/get_liked_albums/:album_id/:person_id", getAlbumLikeByPersonID);
 router.get("/cover/:album_id", getAlbumCoverById);
 
 router.post("/add_album", addAlbum);
-
+router.delete("/delete_album/:album_id", deleteAlbum);
 export default router;

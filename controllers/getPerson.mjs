@@ -16,6 +16,20 @@ export const getPersonById = (req, res) => {
   });
 };
 
+export const getPersonNameById = (req, res) => {
+  const person_id = req.params.person_id;
+  const q = "SELECT person_first_name, person_last_name FROM person WHERE person_id=?";
+
+  db.query(q, [person_id], (err, data) => {
+    if (err) return res.status(500).json(err);
+    
+    if (data.length === 0) {
+      return res.status(404).json({ message: "Person not found" });
+    };
+
+    return res.json(data[0]);
+  });
+};
 
 
 // getPeople (all people)

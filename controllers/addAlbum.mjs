@@ -29,3 +29,14 @@ export const addAlbum = (req, res) => {
     }
 };
 
+export const deleteAlbum = (req, res) => {
+    const album_id = req.params.album_id;
+    const q = "DELETE FROM album WHERE album_id = ?";
+    db.query(q, [album_id], (err, result) => {
+        if (err) return res.status(500).json(err);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Album not found" });
+        };
+        return res.json({ message: "Album deleted successfully" });
+    });
+}

@@ -37,6 +37,18 @@ export const getTracks = (req, res) => {
     });
 };
 
+export const deleteTrack = (req, res) => {
+    const track_id = req.params.track_id;
+    const q = "DELETE FROM track WHERE track_id = ?";
+    db.query(q, [track_id], (err, result) => {
+        if (err) return res.status(500).json(err);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Track not found" });
+        };
+        return res.json({ message: "Track deleted successfully" });
+    });
+};
+
 export const getLikedTracks = (req, res) => {
     const listener_id = req.params.listener_id;
     const q = `

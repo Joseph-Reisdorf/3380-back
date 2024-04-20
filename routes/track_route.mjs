@@ -1,7 +1,7 @@
 import express from "express";
 import multer from "multer";
 
-import { getTracks, getTracksByAlbumId, getTrackBlob } from "../controllers/getTracks.mjs";
+import { getTracks, getTracksByAlbumId, getTrackBlob, deleteTrack } from "../controllers/getTracks.mjs";
 import { addTrack, listenTo } from "../controllers/addTrack.mjs";
 import { trackLike, trackUnlike } from "../controllers/trackLike.mjs";
 import { getLikedTracks, getTracksByListenTo } from "../controllers/getTracks.mjs";
@@ -20,5 +20,6 @@ router.post("/add_track", upload.single('track_mp3'), addTrack);
 router.post("/like/:trackId/:listener_id", trackLike);
 
 router.delete("/unlike/:trackId/:listener_id", trackUnlike);
+router.delete("/delete_track/:track_id", deleteTrack);
 
 export default router;

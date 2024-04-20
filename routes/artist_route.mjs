@@ -11,9 +11,9 @@ router.get("/get_liked_artists/:person_id", getLikedArtists);
 router.get("/get_artist_likes_count/:artist_id", getArtistLikesCount);
 
 
-router.get("/get_artist_ranking_by_tracks", getArtistRankingByTracks);
-router.get("/get_artist_ranking_by_albums", getArtistRankingByAlbums);
-router.get("/get_artist_ranking_by_listens", getArtistRankingByListens);
+router.get("/get_artist_ranking_by_tracks/:start_date/:end_date", getArtistRankingByTracks);
+router.get("/get_artist_ranking_by_albums/:start_date/:end_date", getArtistRankingByAlbums);
+router.get("/get_artist_ranking_by_listens/:start_date/:end_date", getArtistRankingByListens);
 
 
 router.post("/like/:artist_id/:person_id", likeArtist);
