@@ -1,6 +1,7 @@
 import express from "express";
 import { getArtistById, getArtists, searchArtistByName, getArtistRankingByAlbums, getArtistRankingByTracks, getArtistRankingByListens }from "../controllers/getArtist.mjs";
 import { likeArtist, unlikeArtist, getLikedArtists, getArtistLikesCount } from "../controllers/artistLike.mjs";
+import { addBio } from "../controllers/addBio.mjs";
 const router = express.Router();
 
 // path: /aritists/
@@ -10,6 +11,8 @@ router.get("/get_artists", getArtists);
 router.get("/get_liked_artists/:person_id", getLikedArtists);
 router.get("/get_artist_likes_count/:artist_id", getArtistLikesCount);
 
+
+router.put("/update_artist_bio/:artist_id", addBio);
 
 router.get("/get_artist_ranking_by_tracks/:start_date/:end_date", getArtistRankingByTracks);
 router.get("/get_artist_ranking_by_albums/:start_date/:end_date", getArtistRankingByAlbums);
