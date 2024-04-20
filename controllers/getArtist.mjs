@@ -58,11 +58,11 @@ export const getArtistRankingByTracks = (req, res) => {
   person.person_birthdate,
   COUNT(track.track_id) AS number_of_tracks
 FROM 
-  Online_Music_Library.person
+  person
 INNER JOIN 
-  Online_Music_Library.artist ON person.person_id = artist.artist_id
+  artist ON person.person_id = artist.artist_id
 LEFT JOIN 
-  Online_Music_Library.track ON artist.artist_id = track.track_primary_artist_id
+  track ON artist.artist_id = track.track_primary_artist_id
 WHERE 
   person.person_registration_date BETWEEN ? AND ?
 GROUP BY 
@@ -86,11 +86,11 @@ export const getArtistRankingByAlbums = (req, res) => {
       person.person_birthdate,
       COUNT(album.album_id) AS number_of_albums
     FROM 
-      Online_Music_Library.person
+      person
     INNER JOIN 
-      Online_Music_Library.artist ON person.person_id = artist.artist_id
+      artist ON person.person_id = artist.artist_id
     LEFT JOIN 
-      Online_Music_Library.album ON artist.artist_id = album.album_primary_artist_id
+      album ON artist.artist_id = album.album_primary_artist_id
     WHERE 
       person.person_registration_date BETWEEN ? AND ?
     GROUP BY 
@@ -114,13 +114,13 @@ export const getArtistRankingByListens = (req, res) => {
   person.person_birthdate,
   SUM(COALESCE(listen_to.listen_count, 0)) AS total_listens
 FROM 
-  Online_Music_Library.person
+  person
 INNER JOIN 
-  Online_Music_Library.artist ON person.person_id = artist.artist_id
+  artist ON person.person_id = artist.artist_id
 LEFT JOIN 
-  Online_Music_Library.track ON artist.artist_id = track.track_primary_artist_id
+  track ON artist.artist_id = track.track_primary_artist_id
 LEFT JOIN 
-  (SELECT listen_to_track_id, COUNT(*) AS listen_count FROM Online_Music_Library.listen_to GROUP BY listen_to_track_id) AS listen_to 
+  (SELECT listen_to_track_id, COUNT(*) AS listen_count FROM listen_to GROUP BY listen_to_track_id) AS listen_to 
 ON track.track_id = listen_to.listen_to_track_id
 WHERE 
   person.person_registration_date BETWEEN ? AND ?
