@@ -24,6 +24,7 @@ import employeeRoute from "./routes/employee_route.mjs";
 import departmentRoute from "./routes/department_route.mjs";
 import genreRoute from "./routes/genre_route.mjs";
 import adminRoute from "./routes/admin_route.mjs"; // misnomer
+import clicksRoute from "./routes/click_route.mjs"
 // Create express app
 const app = express(); // defines express app for handling requests
 
@@ -72,6 +73,7 @@ app.use("/employees", employeeRoute);
 app.use("/departments", departmentRoute);
 app.use("/genres", genreRoute);
 app.use("/admin", adminRoute);
+app.use('/clicks', clicksRoute)
 
 const PORT = process.env.PORT || 8080;
 
