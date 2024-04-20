@@ -59,7 +59,7 @@ INNER JOIN
 LEFT JOIN 
   Online_Music_Library.track ON artist.artist_id = track.track_primary_artist_id
 WHERE 
-  person.person_registration_date BETWEEN '2024-04-01' AND '2024-04-20'
+  person.person_registration_date BETWEEN ? AND ?
 GROUP BY 
   artist.artist_id
 ORDER BY 
@@ -87,7 +87,7 @@ export const getArtistRankingByAlbums = (req, res) => {
     LEFT JOIN 
       Online_Music_Library.album ON artist.artist_id = album.album_primary_artist_id
     WHERE 
-      person.person_registration_date BETWEEN '2024-04-01' AND '2024-04-20'
+      person.person_registration_date BETWEEN ? AND ?
     GROUP BY 
       artist.artist_id
     ORDER BY 
